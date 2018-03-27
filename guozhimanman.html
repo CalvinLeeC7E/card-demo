@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>卡详情 - 果之满满</title>
+  <link rel="stylesheet" href="http://cdn.staticfile.org/weui/1.1.1/style/weui.min.css">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #F2F5F7;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .card-head {
+      padding: 20px 20px 10px;
+      background-color: white;
+    }
+    
+    .card-head img {
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+    
+    .info {
+      background-color: white;
+      display: flex;
+      flex-direction: row;
+      display: -webkit-flex;
+      -webkit-flex-direction: row;
+      align-items: center;
+      -webkit-align-items: center;
+    }
+    
+    .info-item {
+      flex: 1;
+      -webkit-flex: 1;
+      text-align: center;
+    }
+    
+    .info-item .title {
+      font-size: 14px;
+      color: gray;
+    }
+    
+    .info-item .value {
+      margin-top: 5px;
+      font-size: 18px;
+      color: #FF9B70;
+      font-weight: 500;
+    }
+    
+    .line {
+      background-color: #C5C5C5;
+      width: 2px;
+      height: 20px;
+    }
+    
+    .recharge {
+      background-color: white;
+      padding: 15px 0;
+    }
+    
+    .btn {
+      width: 110px;
+      border: 2px solid #FF9B70;
+      border-radius: 3px;
+      padding: 5px 10px;
+      font-size: 14px;
+      color: #FF9B70;
+      text-align: center;
+      margin: 0 auto;
+      font-weight: 500;
+    }
+    
+    .card-foot {
+      border-top: 1px solid #DDDDDD;
+      margin-top: 10px;
+    }
+    
+    .card-foot img {
+      width: 100%;
+    }
+    
+    .member-rule {
+      background-color: white;
+      border-top: 1px solid #DDDDDD;
+      border-bottom: 1px solid #DDDDDD;
+      padding: 15px;
+    }
+    
+    .member-rule-item {
+      margin-left: 20px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+<div class="card-head">
+  <img src="http://7xisw0.com1.z0.glb.clouddn.com//guozhimanman/card-head.png" alt="">
+</div>
+<div class="info">
+  <div class="info-item">
+    <div class="title">积分</div>
+    <div id="integral" class="value">-</div>
+  </div>
+  <div class="line"></div>
+  <div class="info-item">
+    <div class="title">余额</div>
+    <div id="money" class="value">-</div>
+  </div>
+  <div class="line"></div>
+  <div class="info-item">
+    <div class="title">等级</div>
+    <div id="level" class="value">-</div>
+  </div>
+</div>
+<div class="recharge">
+  <div class="btn" onclick="loading()">充值&权益购买</div>
+</div>
+<div class="member-rule">
+  <div>等级权益</div>
+  <ul>
+    <li class="member-rule-item">尊受会员价</li>
+  </ul>
+</div>
+<div class="card-foot">
+  <img src="http://7xisw0.com1.z0.glb.clouddn.com//guozhimanman/card-foot.png" onclick="loading()">
+</div>
+<div id="loadingToast" style="display: none;">
+  <div class="weui-mask_transparent"></div>
+  <div class="weui-toast">
+    <i class="weui-loading weui-icon_toast"></i>
+    <p class="weui-toast__content">数据加载中</p>
+  </div>
+</div>
+<script type="text/javascript">
+  var xhr = new XMLHttpRequest();
+  xhr.open('get', 'http://cloud.fe.i200.cn/cloud/5a8f75b1854bfb7912357db4/calvin/member/info');
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status == 200) {
+        var data = JSON.parse(xhr.responseText);
+        document.getElementById('integral').innerHTML = data.integral || '';
+        document.getElementById('money').innerHTML = data.money || '';
+        document.getElementById('level').innerHTML = data.level || '';
+      }
+    }
+  }
+
+  function loading () {
+    var loadingEL = document.getElementById('loadingToast');
+    if (loadingEL.style.display === 'none') {
+      loadingEL.style.display = null
+      setTimeout(function () {
+        loadingEL.style.display = 'none'
+      }, 5000)
+    }
+  }
+</script>
+</body>
+</html>
